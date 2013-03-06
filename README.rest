@@ -1,0 +1,28 @@
+===========
+keyedbisect
+===========
+
+A small module, not unalike `bisect <http://docs.python.org/dev/library/bisect.html>`_.
+
+But as `bisect` misses an important option - the ability to set `key`
+function for a given dataset.
+
+For example with original `bisect` you can't do this::
+
+  >>> import keyedbisect
+  >>> arr = sorted([('0', 2), ('1', 1), ('2', 0)])
+  >>> keyedbisect.bisect_left(arr, '0', key=lambda item: item[0])
+  0
+  >>> keyedbisect.bisect_left(arr, 0, key=lambda item: item[1])
+  2
+
+`keyedbisect` also allows more sophisticated usage::
+
+  >>> arr = sorted([('0', 2), ('1', 1), ('2', 0)])
+  >>> sable = keyedbisect.Searchable(arr, key=lambda item: item[0])
+  >>> sable.find('0')
+  2
+  >>> list(sable.range('1', '2'))
+  [('1', 1), ('2', 0)]
+
+
